@@ -10,6 +10,28 @@ const initialState = [
 const tasksSlice = createSlice({
   name: "tasks",
   initialState,
+  reducers: {
+    addTask: (state, { payload }) => {
+      const newTask = {
+        id: state.length + 1,
+        text: payload,
+        complete: false,
+      };
+
+      state.push(newTask);
+    },
+    markTaskAsComplete: (state, { payload }) => {
+      const taskItem = state.find((task) => task.id === payload.id);
+      taskItem.complete = true;
+    },
+    markTaskAsNotComplete: (state, { payload }) => {
+      const taskItem = state.find((task) => task.id === payload.id);
+      taskItem.complete = false;
+    },
+  },
 });
+
+export const { addTask, markTaskAsComplete, markTaskAsNotComplete } =
+  tasksSlice.actions;
 
 export default tasksSlice.reducer;
